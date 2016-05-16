@@ -1,5 +1,3 @@
-
-
 %CyclicSteamInjection.m
 
 clear all
@@ -7,10 +5,7 @@ close all
 clc
 
 % Cyclic Steam Injection Example (Note: analytical model and data from SPE13037)
-%
-%
-
-%% Input data for field and base cases
+% Input data for field and base cases
 kRes = 1.5;                             % Reservoir permeability (D)
 kSteam = 2 * kRes;                      % Permeability to steam (D)
 phi = 0.32;                             % Porosity
