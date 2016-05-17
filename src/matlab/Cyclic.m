@@ -1,5 +1,3 @@
-%CyclicSteamInjection.m
-
 clear all
 close all
 clc
@@ -252,12 +250,17 @@ for CurrentCycleNumber=1:length(SteamInjectionRate)
     end
     
     CumulativeOil = [ CumulativeOil ; qoPreviousCycle ];
-    time_range = linspace( cumulativeCycleLength(CurrentCycleNumber) , cumulativeCycleLength(CurrentCycleNumber+1) , (cumulativeCycleLength(CurrentCycleNumber+1) - cumulativeCycleLength(CurrentCycleNumber)) );
+    time_range = linspace( cumulativeCycleLength(CurrentCycleNumber) ,...
+        cumulativeCycleLength(CurrentCycleNumber+1) , ...
+        (cumulativeCycleLength(CurrentCycleNumber+1) - ...
+        cumulativeCycleLength(CurrentCycleNumber)) );
     CumulativeTime = [ CumulativeTime ; time_range' ];
     
     %Plotting production
     subplot(2,1,2)
-    plot([cumulativeCycleLength(CurrentCycleNumber):1:(cumulativeCycleLength(CurrentCycleNumber+1)')-1],qoPreviousCycle,'-','Color',[0 0.5 0],'LineWidth',2);
+    plot([cumulativeCycleLength(CurrentCycleNumber):1:(...
+        cumulativeCycleLength(CurrentCycleNumber+1)')-1],...
+        qoPreviousCycle,'-','Color',[0 0.5 0],'LineWidth',2);
     hold on;
     xlabel('Days','FontSize',14,'FontWeight','bold');
     ylabel('q_o (STB/day)','FontSize',14,'FontWeight','bold');
@@ -266,7 +269,9 @@ for CurrentCycleNumber=1:length(SteamInjectionRate)
     
     % Plotting temperature
     subplot(2,1,1);
-    plot([cumulativeCycleLength(CurrentCycleNumber):1:(cumulativeCycleLength(CurrentCycleNumber+1)')-1],TaveragePreviousCycle,'r-','LineWidth',2);
+    plot([cumulativeCycleLength(CurrentCycleNumber):1:(...
+        cumulativeCycleLength(CurrentCycleNumber+1))-1],...
+        TaveragePreviousCycle,'r-','LineWidth',2);
     hold on;
     xlabel('Days','FontSize',14,'FontWeight','bold')
     ylabel('T_{avg}','FontSize',14,'FontWeight','bold')
@@ -278,18 +283,10 @@ for CurrentCycleNumber=1:length(SteamInjectionRate)
 end
 
 % Plotting cumulative oil production
-% figure('Color','w');
-% set(gcf, 'Position', get(0,'Screensize'));
-% plot(CumulativeTime,cumsum(CumulativeOil),'-','Color','k','LineWidth',2);
-% xlabel('Days','FontSize',14,'FontWeight','bold','Color','k')
-% ylabel('Cumulative oil produced (STB)','FontSize',14,'FontWeight','bold','Color','k')
-% set(gca,'FontSize',14,'FontWeight','bold');
-%
-
-
-
-
-
-
-%%
+figure('Color','w');
+set(gcf, 'Position', get(0,'Screensize'));
+plot(CumulativeTime,cumsum(CumulativeOil),'-','Color','k','LineWidth',2);
+xlabel('Days','FontSize',14,'FontWeight','bold','Color','k')
+ylabel('Cumulative oil produced (STB)','FontSize',14,'FontWeight','bold','Color','k')
+set(gca,'FontSize',14,'FontWeight','bold');
 
