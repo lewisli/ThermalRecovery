@@ -1,6 +1,13 @@
-clear all
-close all
-clc
+%% Cyclic.m
+% Simulates oil production, cumulative oil production, and average 
+% reservoir temperature as a function of time in a cyclic steam injection
+% project.
+%
+%
+% Authors: Lewis Li, Daniel Brito
+% Date: May 18th 2016
+
+clear all;
 
 % Cyclic Steam Injection Example (Note: analytical model and data from SPE13037)
 % Input data for field and base cases
@@ -23,23 +30,30 @@ g = 32.17;                              % Gravitational acceleration (ft/s^2)
 %%
 
 %% Operational data
-SteamInjectionRate = [647 905 953 972 954 1042 1067];      % Steam injection rate (bbl/day)
-InjectionTime = [6 9 8 6 6 7 7];                           % Injection time (days)
-SoakTime = [5 2 10 12 9 10 11];                            % Soak time (days)
-DownHoleSteamTemp = [360 330 330 300 300 300 300];         % Downhole steam temperature (F)
-DownHoleSteamQuality = [0.7 0.6 0.5 0.5 0.5 0.5 0.5];      % Downhole steam quality
-ProductionTime = [55 146 79 98 135 136 148];               % Production time (days)
-WIP = 50000;                                               % Amount of mobile water in place at beginning of cycle (Assumption)
-qw = 0;                                                    % water production rate (BPD) (Assumption)
-CumulativeOil = [];                                        % Cumulative oil production (STB)
-CumulativeTime = [];                                       % Cumulative time (days)
-cycleLength = InjectionTime + SoakTime + ProductionTime;   % Total cycle time (days)
-cumulativeCycleLength = cumsum([1;cycleLength']);          % Cumulative cycle time (days)
-
-
-%% Setting up plot
-figure('Color','w');
-set(gcf, 'Position', get(0,'Screensize'));
+% Steam injection rate (bbl/day)
+SteamInjectionRate = [647 905 953 972 954 1042 1067];      
+% Injection time (days)
+InjectionTime = [6 9 8 6 6 7 7];  
+% Soak time (days)
+SoakTime = [5 2 10 12 9 10 11];         
+% Downhole steam temperature (F)
+DownHoleSteamTemp = [360 330 330 300 300 300 300];    
+% Downhole steam quality
+DownHoleSteamQuality = [0.7 0.6 0.5 0.5 0.5 0.5 0.5];  
+% Production time (days)
+ProductionTime = [55 146 79 98 135 136 148];  
+% Amount of mobile water in place at beginning of cycle (Assumption)
+WIP = 50000;                   
+% water production rate (BPD) (Assumption)
+qw = 0;                  
+% Cumulative oil production (STB)
+CumulativeOil = [];    
+% Cumulative time (days)
+CumulativeTime = [];  
+% Total cycle time (days)
+cycleLength = InjectionTime + SoakTime + ProductionTime;   
+% Cumulative cycle time (days)
+cumulativeCycleLength = cumsum([1;cycleLength']);          
 
 %% Evaluate constants
 % Bulk volumetric heat capacity of Jones (eq 19)
@@ -49,7 +63,6 @@ cp = 32.5 + (4.6 * phi^0.32 - 2) * (10 * Swi - 1.5);
 rhoWater = 62.4 - 11 * log( ( 705 - Tstd ) / ( 705 - Tr ) );    
 
 %% Starting cycles
-
 for CurrentCycleNumber=1:length(SteamInjectionRate)
     
     % Time at beginning of each cycle
@@ -277,9 +290,6 @@ for CurrentCycleNumber=1:length(SteamInjectionRate)
     ylabel('T_{avg}','FontSize',14,'FontWeight','bold')
     set(gca,'FontSize',14,'FontWeight','bold');
     axis tight;
-    
-    clear Tavg_saved qo_saved;
-    
 end
 
 % Plotting cumulative oil production
