@@ -16,13 +16,15 @@ Tb = 600;
 Ta = 100;
 % Time (days)
 time = 21;
+
 % Time function f(td) for the radiation boundary condition model
 % Table 10.1 (Prats, M. 1982)
-load('Table_10pt1_Prats.mat');
+load('../../data/Table_10pt1_Prats.mat');
 
 tableVertical = [0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0];
 tableHorizontal = [100.0, 50.0, 20.0, 10.0, 5.0, 2.0, 1.0, 0.5, 0.2, 0.1,...
     0.05, 0.02, 0.01, 0.0];
+
 % Well depth (ft)
 depth = 1000;
 % Tubing outer radius (ft)
@@ -58,6 +60,7 @@ RhGuess = (1/pi)*(log(rIns/ro))/lambdaIns;
 Rprime = RhGuess;
 error = Inf;
 ConvergenceCriterion = 0.001;
+NumIterations = 0;
 
 % Check for convergence
 while (error > ConvergenceCriterion)
@@ -124,7 +127,11 @@ while (error > ConvergenceCriterion)
     % Convergence check
     error = abs(Rh - Rprime);
     Rprime = Rh;
+    
+    NumIterations = NumIterations + 1;
 end
+
+display(['Took ' num2str(NumIterations) ' for convergence']);
 
 %% Calculate heat loss
 %  Eqn 10.1: Heat loss per unit depth of the well (Btu/ft-D)
